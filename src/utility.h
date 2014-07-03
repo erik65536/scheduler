@@ -2,10 +2,10 @@
 #include <string>
 #include <cstdint>
 
-class utility
+namespace scheduler
 {
-public:
-  //return false if string is not valid
-  static bool string_to_uint64(const std::string& string,uint64_t& val);
+
+bool string_to_uint64(const std::string& string,uint64_t& value);
+
 };
 

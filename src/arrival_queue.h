@@ -1,14 +1,18 @@
+#pragma once
+#include "process.h"
+
+namespace scheduler
+{
+
 class arrival_queue
 {
 public:
-  //construct with all processes in list
-  arrival_queue(std::list<process>& procs);
-  //is queue empty
+  arrival_queue(process* proc,size_t n);
   bool empty() const;
-  //remove from queue and add to list if arrival time == time
-  //doesn't add anything if queue is empty
-  void get(uint64_t time,std::list<process*>& list);
+  void get(uint64_t time,run_list& list);
 private:
-  std::list<process*> m_queue;
+  run_list m_list;
 };
+
+}
 

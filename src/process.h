@@ -1,42 +1,32 @@
-class process
+#pragma once
+#include <boost/intrusive/list.hpp>
+
+namespace scheduler
+{
+
+struct tag_run;
+struct tag_boost;
+typedef boost::intrusive::list_base_hook<boost::intrusive::tag<tag_run>> hook_run;
+typedef boost::intrusive::list_base_hook<boost::intrusive::tag<tag_boost>> hook_boost;
+
+class process : public hook_run, public hook_boost
 {
 public:
   process(const process&) = delete;
   const process& operator=(const process&) = delete;
   process(uint32_t pid,uint64_t burst,uint64_t arrival,uint8_t priority);
-  //pid
-  uint32_t pid() const;
-  //burst
   uint64_t burst() const;
-  //remaining burst
   uint64_t remaining() const;
   uint64_t& remaining();
-  //arrival time
   uint64_t arrival() const;
-  //terminate time
-  uint64_t terminate();
+  uint64_t terminate() const;
   uint64_t& terminate();
-  //base priority
-  uint8_t base_priority() const;
-  //current priority
-  uint8_t priority() const;
-  uint8_t& priority();
-  //boost exiration time
   uint64_t boost() const;
   uint64_t& boost();
-  //iterator to boost_queue
-  const std::list<process*>::iterator& boost_it() const;
-  std::list<process*>::iterator& boost()_it;
-  //iterator to run queue
-  const std::list<process*>::iterator& run_it() const;
-  std::list<process*>::iterator& run()_it;
-  //compare for sorting
-  static bool less_than_pid(const process& p1,const process& p2);
-  static bool less_than_pid_ptr(const process* p1,const process* p2);
-  static bool less_than_priority_pid(const process& p1,const process& p2);
-  static bool less_than_priority_pid_ptr(const process* p1,const process* p2);
-  static bool less_than_arrival_priority_pid(const process& p1,const process& p2);
-  static bool less_than_arrival_priority_pid_ptr(const process* p1,const process* p2);
+  uint32_t pid() const;
+  uint8_t base_priority() const;
+  uint8_t priority() const;
+  uint8_t& priority();
 private:
   const uint64_t m_burst;
   uint64_t m_remaining;
@@ -46,7 +36,9 @@ private:
   const uint32_t m_pid;
   const uint8_t m_base_priority;
   uint8_t m_priority;
-  std::list<process*>::iterator m_boost_it;
-  std::list<process*>::iterator m_run_it;
 };
 
+typedef boost::intrusive::list<process,boost::intrusive::base_hook<hook_run>,boost::intrusive::constant_time_size<false>> run_list;
+typedef boost::intrusive::list<process,boost::intrusive::base_hook<hook_boost>,boost::intrusive::constant_time_size<false>> run_boost;
+
+}

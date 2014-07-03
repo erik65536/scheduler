@@ -1,14 +1,22 @@
+#pragma once
+#include <boost/interprocess/file_mapping.hpp>
+#include <boost/interprocess/mapped_region.hpp>
+
+namespace scheduler
+{
+
 class file_parser
 {
 public:
-  //open file and read until first line of processes
-  //throw std::logic_error if problems opening file
-  file_parser(const std::string& file_name);
-  //read one line of file and parse
-  //doesn't check if values are in range
-  //return false if end of file or error
+  file_parser(const char* file_name);
   bool line(uint64_t& pid,uint64_t& burst,uint64_t& arrival,uint64_t& priority);
 private:
-  std::ifstream m_file;
-};
+  bool get_line(uint64_t& pid,uint64_t& burst,uint64_t& arrival,uint64_t& priority);
+private:
+  boost::interprocess::file_mapping m_file;
+  boost::interprocess::mapped_region m_map;
+  char* m_cur;
+  char* m_end;
+}; 
 
+}
