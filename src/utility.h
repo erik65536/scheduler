@@ -1,3 +1,7 @@
+#pragma once
+#include <string>
+#include <cstdint>
+
 class utility
 {
 public:
