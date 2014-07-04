@@ -1,7 +1,7 @@
 CC=g++
 CFLAGS=-c -Wall -std=c++11
 LDFLAGS=
-SOURCES=src/main.cpp src/file_parser.cpp src/utility.cpp src/process.cpp src/arrival_queue.cpp
+SOURCES=src/main.cpp src/file_parser.cpp src/utility.cpp src/process.cpp src/arrival_queue.cpp src/boost_queue.cpp src/run_queue.cpp src/running.cpp src/scheduler.cpp
 INC=-I.
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=scheduler

@@ -50,6 +50,8 @@ bool file_parser::get_line(uint64_t& pid,uint64_t& burst,uint64_t& arrival,uint6
     }
     break;
   }
+  if(col < 4 && !cols[col].empty())
+    ++col;
   if(col >= 4)
   {
     if(!string_to_uint64(cols[0],pid))
@@ -61,6 +63,8 @@ bool file_parser::get_line(uint64_t& pid,uint64_t& burst,uint64_t& arrival,uint6
     if(!string_to_uint64(cols[3],priority))
       return false;
   }
+  else
+    return false;
   return true;
 }
 

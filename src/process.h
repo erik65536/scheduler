@@ -27,6 +27,8 @@ public:
   uint8_t base_priority() const;
   uint8_t priority() const;
   uint8_t& priority();
+  bool operator<(const process& proc) const;
+  static bool less_than_arrival_pid(const process& proc1,const process& proc2);
 private:
   const uint64_t m_burst;
   uint64_t m_remaining;
@@ -39,6 +41,6 @@ private:
 };
 
 typedef boost::intrusive::list<process,boost::intrusive::base_hook<hook_run>,boost::intrusive::constant_time_size<false>> run_list;
-typedef boost::intrusive::list<process,boost::intrusive::base_hook<hook_boost>,boost::intrusive::constant_time_size<false>> run_boost;
+typedef boost::intrusive::list<process,boost::intrusive::base_hook<hook_boost>,boost::intrusive::constant_time_size<false>> boost_list;
 
 }

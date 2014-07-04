@@ -11,7 +11,7 @@ public:
   bool empty() const;
   void get(uint64_t time,run_list& list);
 private:
-  run_list m_list;
+  run_list m_queue;
 };
 
 }
