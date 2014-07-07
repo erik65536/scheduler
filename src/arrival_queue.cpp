@@ -6,8 +6,6 @@ namespace scheduler
 arrival_queue::arrival_queue(std::vector<process>& procs)
   :m_queue(procs.begin(),procs.end())
 {
-  //for(size_t i=0; i<n; ++i)
-  //  m_queue.push_back(*(proc+i));
   m_queue.sort(&process::less_than_arrival_pid);
 }
 
@@ -18,15 +16,15 @@ bool arrival_queue::empty() const
 
 void arrival_queue::get(uint64_t time,run_list& list)
 {
-  auto start = m_queue.begin();
-  auto end = start;
-  while(end != m_queue.end())
+  auto first = m_queue.begin();
+  auto last = first;
+  while(last != m_queue.end())
   {
-    if(end->arrival() != time)
+    if(last->arrival() != time)
       break;
-    ++end;
+    ++last;
   }
-  list.splice(list.end(),m_queue,start,end);
+  list.splice(list.end(),m_queue,first,last);
 }
 
 }
