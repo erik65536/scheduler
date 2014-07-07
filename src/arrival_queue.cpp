@@ -3,10 +3,11 @@
 namespace scheduler
 {
 
-arrival_queue::arrival_queue(process* proc,size_t n)
+arrival_queue::arrival_queue(std::vector<process>& procs)
+  :m_queue(procs.begin(),procs.end())
 {
-  for(size_t i=0; i<n; ++i)
-    m_queue.push_back(*(proc+i));
+  //for(size_t i=0; i<n; ++i)
+  //  m_queue.push_back(*(proc+i));
   m_queue.sort(&process::less_than_arrival_pid);
 }
 

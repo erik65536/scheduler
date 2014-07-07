@@ -10,7 +10,7 @@ namespace scheduler
 class scheduler
 {
 public:
-  scheduler(uint64_t quantum,process* procs,size_t n);
+  scheduler(uint64_t quantum,std::vector<process>& procs);
   void run();
 private:
   arrival_queue m_arrival;

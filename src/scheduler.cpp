@@ -3,8 +3,8 @@
 namespace scheduler
 {
 
-scheduler::scheduler(uint64_t quantum,process* procs,size_t n)
-  :m_arrival(procs,n),
+scheduler::scheduler(uint64_t quantum,std::vector<process>& procs)
+  :m_arrival(procs),
    m_running(quantum)
 {}
 

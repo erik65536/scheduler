@@ -1,6 +1,5 @@
 #pragma once
-#include <boost/interprocess/file_mapping.hpp>
-#include <boost/interprocess/mapped_region.hpp>
+#include <fstream>
 
 namespace scheduler
 {
@@ -13,10 +12,7 @@ public:
 private:
   bool get_line(uint64_t& pid,uint64_t& burst,uint64_t& arrival,uint64_t& priority);
 private:
-  boost::interprocess::file_mapping m_file;
-  boost::interprocess::mapped_region m_map;
-  char* m_cur;
-  char* m_end;
+  std::ifstream m_file;
 }; 
 
 }
