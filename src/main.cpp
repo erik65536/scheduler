@@ -14,7 +14,16 @@ int main(int narg,char** arg)
   }
 
   uint64_t quantum;
-  scheduler::string_to_uint64(arg[1],quantum);
+  if(!scheduler::string_to_uint64(arg[1],quantum))
+  {
+    std::cout << "Quantum is not a positive integer." << std::endl;
+    return -1;
+  }
+  if(quantum == 0)
+  {
+    std::cout << "Quantum must be greater than zero." << std::endl;
+    return -1;
+  }
 
   std::vector<scheduler::process> processes;
   try
