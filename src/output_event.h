@@ -1,5 +1,6 @@
 #pragma once
 #include <fstream>
+#include <cstdint>
 
 namespace scheduler
 {
@@ -15,6 +16,3 @@ private:
 };
 
 }
-
-
-

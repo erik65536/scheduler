@@ -12,7 +12,7 @@ int main(int narg,char** arg)
   {
     if(narg != 3)
     {
-      std::cout << "scheduler <quanum> <process_file>" << std::endl;
+      std::cout << "scheduler [quanum] [process file]" << std::endl;
       return -1;
     }
 
@@ -42,22 +42,21 @@ int main(int narg,char** arg)
           continue;
         if(priority >= 100)
           continue;
-        if(pids.find(pid) != pids.end())
+        if(pids.find(static_cast<uint32_t>(pid)) != pids.end())
           continue;
-        pids.insert(pid);
-        processes.emplace_back(pid,burst,arrival,priority);
-        //std::cout << pid << " " << burst << " " << arrival << " " << priority << std::endl;
+        pids.insert(static_cast<uint32_t>(pid));
+        processes.emplace_back(static_cast<uint32_t>(pid),burst,arrival,static_cast<uint8_t>(priority));
       }
     }
 
     {
-      scheduler::output_event out("html/event.js");
+      scheduler::output_event out("output_event.js");
       scheduler::scheduler s(out,quantum,processes);
       s.run();
     }
 
     {
-      scheduler::output_process out("html/process.js");
+      scheduler::output_process out("output_process.js");
       out.output(processes);
     }
   }
@@ -69,4 +68,3 @@ int main(int narg,char** arg)
 
   return 0;
 }
-

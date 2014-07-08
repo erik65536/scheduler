@@ -14,7 +14,7 @@ class process : public hook_run, public hook_boost
 public:
   process(const process&) = delete;
   const process& operator=(const process&) = delete;
-  process(process&& proc) = default;
+  process(process&& proc);
   process(uint32_t pid,uint64_t burst,uint64_t arrival,uint8_t priority);
   uint64_t burst() const;
   uint64_t remaining() const;

@@ -7,7 +7,7 @@ namespace scheduler
 {
 
 file_parser::file_parser(const char* file_name)
-  :m_file(file_name)
+:m_file(file_name)
 {
   if(!m_file)
     throw std::logic_error("Unable to open file.");
@@ -25,7 +25,7 @@ bool file_parser::line(uint64_t& pid,uint64_t& burst,uint64_t& arrival,uint64_t&
 
 bool file_parser::get_line(uint64_t& pid,uint64_t& burst,uint64_t& arrival,uint64_t& priority)
 {
-  static std::array<std::string,4> cols;
+  static std::array<std::string,NCOL> cols;
   cols[0].clear();
   cols[1].clear();
   cols[2].clear();
@@ -45,19 +45,19 @@ bool file_parser::get_line(uint64_t& pid,uint64_t& burst,uint64_t& arrival,uint6
       break;
     case ' ':
     case '\t':
-      if(col < 4 && !cols[col].empty())
+      if(col < NCOL && !cols[col].empty())
         ++col;
       continue;
     default:
-      if(col < 4)
-       cols[col].push_back(ch);
+      if(col < NCOL)
+        cols[col].push_back(ch);
       continue;
     }
     break;
   }
-  if(col < 4 && !cols[col].empty())
+  if(col < NCOL && !cols[col].empty())
     ++col;
-  if(col < 4)
+  if(col < NCOL)
     return false;
   if(!string_to_uint64(cols[0],pid))
     return false;
@@ -71,4 +71,3 @@ bool file_parser::get_line(uint64_t& pid,uint64_t& burst,uint64_t& arrival,uint6
 }
 
 }
-

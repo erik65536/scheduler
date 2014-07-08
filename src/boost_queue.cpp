@@ -38,5 +38,3 @@ void boost_queue::erase(process* proc)
 }
 
 }
-
-

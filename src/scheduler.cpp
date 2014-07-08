@@ -4,8 +4,8 @@ namespace scheduler
 {
 
 scheduler::scheduler(output_event& out,uint64_t quantum,std::vector<process>& procs)
-  :m_arrival(procs),
-   m_running(out,quantum)
+:m_arrival(procs),
+m_running(out,quantum)
 {}
 
 void scheduler::run()
@@ -34,4 +34,3 @@ void scheduler::run()
 }
 
 }
-

@@ -1,5 +1,6 @@
 #pragma once
 #include "process.h"
+#include <vector>
 
 namespace scheduler
 {
@@ -15,4 +16,3 @@ private:
 };
 
 }
-

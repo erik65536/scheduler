@@ -1,6 +1,6 @@
 CC=g++
-CFLAGS=-c -Wall -std=c++11
-LDFLAGS=
+CFLAGS=-c -Wall -std=c++11 -O3
+LDFLAGS=-O3
 SOURCES=src/main.cpp src/file_parser.cpp src/utility.cpp src/process.cpp src/arrival_queue.cpp src/boost_queue.cpp src/run_queue.cpp src/running.cpp src/scheduler.cpp src/output_process.cpp src/output_event.cpp
 INC=-I.
 OBJECTS=$(SOURCES:.cpp=.o)

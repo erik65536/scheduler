@@ -3,15 +3,28 @@
 namespace scheduler
 {
 
+process::process(process&& proc)
+:hook_run(proc),
+hook_boost(proc),
+m_burst{proc.m_burst},
+m_remaining{proc.m_remaining},
+m_arrival{proc.m_arrival},
+m_terminate{proc.m_terminate},
+m_boost{proc.m_boost},
+m_pid{proc.m_pid},
+m_base_priority{proc.m_base_priority},
+m_priority{proc.m_priority}
+{}
+
 process::process(uint32_t pid,uint64_t burst,uint64_t arrival,uint8_t priority)
-  :m_burst{burst},
-   m_remaining{burst},
-   m_arrival{arrival},
-   m_terminate{0},
-   m_boost{0},
-   m_pid{pid},
-   m_base_priority{priority},
-   m_priority{priority}
+:m_burst{burst},
+m_remaining{burst},
+m_arrival{arrival},
+m_terminate{0},
+m_boost{0},
+m_pid{pid},
+m_base_priority{priority},
+m_priority{priority}
 {}
 
 uint64_t process::burst() const
@@ -87,4 +100,3 @@ bool process::less_than_arrival_pid(const process& proc1,const process& proc2)
 }
 
 }
-

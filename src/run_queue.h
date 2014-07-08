@@ -10,7 +10,7 @@ class run_queue
 {
 private:
   static const uint8_t PRIORITY_N = 100;
-  static const uint8_t PRIORITY_BOOST[48];
+  static const uint8_t PRIORITY_BOOST[49];
 public:
   bool empty() const;
   void insert(run_list& list);
@@ -22,4 +22,3 @@ private:
 };
 
 }
-

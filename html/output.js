@@ -3,47 +3,37 @@ $(function()
   var table = $('#table');
   var grid = $('#gantt_grid');
 
-  var process_n = Object.keys(g_process).length;
-  var wait_time = 0;
-  var turn_time = 0;
+  $("#stat_proc").html(g_process.stats.total);
+  $("#stat_turn").html(g_process.stats.turnaround);
+  $("#stat_wait").html(g_process.stats.wait);
   
+  var process_n = g_process.stats.total;
   var hue_table = new Array();
 
-  for(var pid in g_process)
+  var process = g_process.process;
+  for(var pid in process)
   {
-    var proc = g_process[pid];
+    var proc = process[pid];
     var arrival = proc[0];
     var term = proc[1];
     var burst = proc[2];
     var pri = proc[3];
-    var turn = term-arrival;
-    var wait = turn-burst;
-    var huen = hue_table.length;
-    var procn = g_process.length;
+    var turn = proc[4];
+    var wait = proc[5];
     var hue = hue_table.length/process_n*360;
     hue_table[pid] = hue;
-    wait_time += wait;
-    turn_time += turn;
     
-    table.append($('<tr id="proc_'+pid+'"><td>&nbsp;<span style="background-color:hsl('+hue+',100%,85%)">&nbsp;&nbsp;</span> '+pid+'</td><td>'+arrival+'</td><td>'+term+'</td><td>'+burst+'</td><td>'+pri+'</td><td>'+turn+'</td><td>'+wait+'</td></tr>').hover(
-    function()
+    table.append($('<tr id="proc_'+pid+'"><td>&nbsp;<span style="background-color:hsl('+hue+',100%,85%)">&nbsp;&nbsp;</span> '+pid+'</td><td>'+arrival+'</td><td>'+term+'</td><td>'+burst+'</td><td>'+pri+'</td><td>'+turn+'</td><td>'+wait+'</td></tr>').mouseenter({pid:pid},
+    function(data)
     {
-      var pid = $(this).attr('id').split('proc_')[1];
-      $('.ev_'+pid).toggleClass('ev-hover',true);
-    },
-    function()
+      $('.ev_'+data.data.pid).toggleClass('ev-hover',true);
+    }).mouseleave({pid:pid},
+    function(data)
     {
-      var pid = $(this).attr('id').split('proc_')[1];
-      $('.ev_'+pid).toggleClass('ev-hover',false);
+      $('.ev_'+data.data.pid).toggleClass('ev-hover',false);
     }));
   }
   
-  wait_time /= process_n;
-  turn_time /= process_n;
-  $("#stat_proc").html(process_n);
-  $("#stat_turn").html(turn_time);
-  $("#stat_wait").html(wait_time);
-
   var end = 0;
   for(var i=0; i<g_event.length; ++i)
   {
