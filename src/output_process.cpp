@@ -25,7 +25,7 @@ void output_process::output(std::vector<process>& procs)
            << proc.arrival() << ","
            << proc.terminate() << ","
            << proc.burst() << ","
-           << proc.base_priority() << "],";
+           << static_cast<uint32_t>(proc.base_priority()) << "],";
   }
 }
 

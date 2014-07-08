@@ -1,2 +1,1 @@
-//pid:["arrival","terminate","burst","priority"]
-var g_process = {0:[0,40,30,34],1:[10,20,10,55]};
+var g_process={1:[0,190,100,99],2:[0,200,100,99],3:[0,300,100,0],};

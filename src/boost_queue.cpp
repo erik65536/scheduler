@@ -28,9 +28,13 @@ void boost_queue::insert(uint64_t time,run_list& list)
   }
 }
 
-void boost_queue::erase(process& proc)
+void boost_queue::erase(process* proc)
 {
-  m_queue.erase(m_queue.iterator_to(proc));
+  if(proc == nullptr)
+    return;
+  if(!proc->hook_boost::is_linked())
+    return;
+  m_queue.erase(m_queue.iterator_to(*proc));
 }
 
 }

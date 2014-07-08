@@ -51,7 +51,8 @@ int main(int narg,char** arg)
     }
 
     {
-      scheduler::scheduler s(quantum,processes);
+      scheduler::output_event out("html/event.js");
+      scheduler::scheduler s(out,quantum,processes);
       s.run();
     }
 

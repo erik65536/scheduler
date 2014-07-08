@@ -3,9 +3,9 @@
 namespace scheduler
 {
 
-scheduler::scheduler(uint64_t quantum,std::vector<process>& procs)
+scheduler::scheduler(output_event& out,uint64_t quantum,std::vector<process>& procs)
   :m_arrival(procs),
-   m_running(quantum)
+   m_running(out,quantum)
 {}
 
 void scheduler::run()
@@ -21,9 +21,14 @@ void scheduler::run()
     m_arrival.get(time,add_list);
     m_running.get(time,add_list);
     add_list.sort();
+    m_boost.insert(time,add_list);
     m_run.insert(add_list);
     if(m_running.empty())
-      m_running.run(time,m_run.top());
+    {
+      process* proc = m_run.top();
+      m_boost.erase(proc);
+      m_running.run(time,proc);
+    }
     ++time;
   }
 }

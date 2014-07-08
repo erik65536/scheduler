@@ -12,7 +12,7 @@ private:
 public:
   void get(uint64_t time,boost_list& list);
   void insert(uint64_t time,run_list& list);
-  void erase(process& proc);
+  void erase(process* proc);
 private:
   boost_list m_queue;
 };
