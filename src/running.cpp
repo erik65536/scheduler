@@ -3,8 +3,8 @@
 namespace scheduler
 {
 
-running::running(output_event& out,uint64_t quantum)
-:m_out(out),
+running::running(output_event* out,uint64_t quantum)
+:m_out{out},
 m_quantum{quantum},
 m_proc{nullptr}
 {}
@@ -36,7 +36,8 @@ void running::run(uint64_t time,process* proc)
   proc->remaining() -= run;
   if(proc->remaining() == 0)
     proc->terminate() = m_stop;
-  m_out.event(proc->pid(),m_start,m_stop,proc->priority());
+  if(m_out != nullptr)
+    m_out->event(proc->pid(),m_start,m_stop,proc->priority());
 
   uint8_t pri_diff = proc->priority()-proc->base_priority();
   run = std::min(run,static_cast<uint64_t>(255));

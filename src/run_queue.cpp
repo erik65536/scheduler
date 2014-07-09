@@ -12,14 +12,17 @@ bool run_queue::empty() const
 
 void run_queue::insert(run_list& list)
 {
-  run_list::iterator it;
-  while((it = list.begin()) != list.end())
+  auto it = list.begin();
+  auto end = list.end();
+  while(it != end)
   {
     process& proc = *it;
     uint8_t priority = proc.priority();
     run_list& queue = m_queue[priority];
-    queue.splice(queue.end(),list,it);
-    m_nonempty.insert(priority);
+    if(queue.empty())
+      m_nonempty.insert(priority);
+    it = list.erase(it);
+    queue.push_back(proc);
   }
 }
 

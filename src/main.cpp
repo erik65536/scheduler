@@ -10,11 +10,12 @@ int main(int narg,char** arg)
 {
   try
   {
-    if(narg != 3)
+    if(narg != 3 && narg != 4)
     {
       std::cout << "scheduler [quanum] [process file]" << std::endl;
       return -1;
     }
+    bool output = narg != 4;
 
     uint64_t quantum;
     if(!scheduler::string_to_uint64(arg[1],quantum))
@@ -50,11 +51,20 @@ int main(int narg,char** arg)
     }
 
     {
-      scheduler::output_event out("output_event.js");
-      scheduler::scheduler s(out,quantum,processes);
-      s.run();
+      if(output)
+      {
+        scheduler::output_event out("output_event.js");
+        scheduler::scheduler s(&out,quantum,processes);
+        s.run();
+      }
+      else
+      {
+        scheduler::scheduler s(nullptr,quantum,processes);
+        s.run();
+      }
     }
 
+    if(output)
     {
       scheduler::output_process out("output_process.js");
       out.output(processes);

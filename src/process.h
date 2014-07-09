@@ -29,7 +29,14 @@ public:
   uint8_t priority() const;
   uint8_t& priority();
   bool operator<(const process& proc) const;
-  static bool less_than_arrival_pid(const process& proc1,const process& proc2);
+  static bool less_than_arrival_pid(const process& proc1,const process& proc2)
+  {
+    if(proc1.m_arrival < proc2.m_arrival)
+      return true;
+    if(proc1.m_arrival == proc2.m_arrival)
+      return proc1.m_pid < proc2.m_pid;
+    return false;
+  }
 private:
   const uint64_t m_burst;
   uint64_t m_remaining;

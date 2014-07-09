@@ -92,11 +92,4 @@ bool process::operator<(const process& proc) const
   return m_pid < proc.m_pid;
 }
 
-bool process::less_than_arrival_pid(const process& proc1,const process& proc2)
-{
-  if(proc1.m_arrival == proc2.m_arrival)
-    return proc1.m_pid < proc2.m_pid;
-  return proc1.m_arrival < proc2.m_arrival;
-}
-
 }
