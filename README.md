@@ -2,7 +2,6 @@ scheduler
 =========
 
 **TODO**
-* output stats to console
 * correctness checking
 * bug hunting
 * optimize

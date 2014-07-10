@@ -4,11 +4,11 @@
 namespace scheduler
 {
 
-output_event::output_event(const char* file_name)
-:m_file(file_name)
+output_event::output_event(const std::string& file_name)
+:m_file(file_name.c_str())
 {
   if(!m_file)
-    throw std::logic_error(std::string("Unable to open ").append(file_name).append(" for output."));
+    throw std::logic_error("Unable to open "+file_name+" for writing.");
   m_file << "var g_event=[";
 }
 

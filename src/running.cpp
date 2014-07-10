@@ -14,7 +14,7 @@ bool running::empty() const
   return m_proc == nullptr;
 }
 
-void running::get(uint64_t time,run_list& list)
+void running::get(uint64_t time,run_list& list,size_t& terminate)
 {
   if(m_proc == nullptr)
     return;
@@ -22,6 +22,8 @@ void running::get(uint64_t time,run_list& list)
     return;
   if(m_proc->remaining() != 0)
     list.push_back(*m_proc);
+  else
+    ++terminate;
   m_proc = nullptr;
 }
 

@@ -4,30 +4,19 @@
 namespace scheduler
 {
 
-output_process::output_process(const char* file_name)
-:m_file(file_name,std::ios_base::trunc)
+output_process::output_process(const std::string& file_name)
+:m_file(file_name.c_str(),std::ios_base::trunc)
 {
   if(!m_file)
-    throw std::logic_error(std::string("Unable to open ").append(file_name).append(" for writing."));
-  m_file << "var g_process={";
+    throw std::logic_error("Unable to open "+file_name+" for writing.");
 }
 
-void output_process::output(std::vector<process>& procs)
+void output_process::output(std::vector<process>& procs,double avg_turn,double avg_wait)
 {
-  uint64_t total_turn = 0;
-  uint64_t total_wait = 0;
-  uint64_t turn;
-  for(process& proc : procs)
-  {
-    turn = proc.terminate()-proc.arrival();
-    total_turn += turn;
-    total_wait += turn-proc.burst();
-  }
-  m_file << "stats:{"
+  m_file << "var g_process={stats:{"
          << "total:" << procs.size() << ","
-         << "turnaround:" << static_cast<double>(total_turn)/static_cast<double>(procs.size()) << ","
-         << "wait:" << static_cast<double>(total_wait)/static_cast<double>(procs.size()) << "},process:{";
-
+         << "turnaround:" << avg_turn << ","
+         << "wait:" << avg_wait << "},process:{";
   for(process& proc : procs)
   {
     uint64_t turn = proc.terminate()-proc.arrival();
@@ -39,7 +28,6 @@ void output_process::output(std::vector<process>& procs)
            << turn << ","
            << turn-proc.burst() << "],";
   }
-
   m_file << "}};";
 }
 

@@ -29,6 +29,21 @@ bool string_to_uint64(const std::string& string,uint64_t& value)
   return true;
 }
 
+void calc_stats(const std::vector<process>& processes,double& avg_turn,double& avg_wait)
+{
+  uint64_t total_turn = 0;
+  uint64_t total_wait = 0;
+  uint64_t turn;
+  for(const process& proc : processes)
+  {
+    turn = proc.terminate()-proc.arrival();
+    total_turn += turn;
+    total_wait += turn-proc.burst();
+  }
+  avg_turn = static_cast<double>(total_turn)/static_cast<double>(processes.size());
+  avg_wait = static_cast<double>(total_wait)/static_cast<double>(processes.size());
+}
+
 size_t process_from_file(const std::string& file_name,std::vector<process>* container)
 {
   size_t n = 0;

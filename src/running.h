@@ -10,7 +10,7 @@ class running
 public:
   running(output_event* out,uint64_t quantum);
   bool empty() const;
-  void get(uint64_t time,run_list& list);
+  void get(uint64_t time,run_list& list,size_t& terminate);
   void run(uint64_t time,process* proc);
 private:
   output_event* m_out;
