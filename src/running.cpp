@@ -1,12 +1,19 @@
 #include "running.h"
+#include <iostream>
 
 namespace scheduler
 {
 
-running::running(output_event* out,uint64_t quantum)
+const std::chrono::milliseconds running::PRINT_INTERVAL(1000);
+
+running::running(output_event* out,uint64_t quantum,size_t nprocess)
 :m_out{out},
 m_quantum{quantum},
-m_proc{nullptr}
+m_proc{nullptr},
+m_real_time(std::chrono::high_resolution_clock::now()),
+m_nprocess{nprocess},
+m_terminate{0},
+m_dnprocess{static_cast<double>(nprocess)}
 {}
 
 bool running::empty() const
@@ -14,7 +21,7 @@ bool running::empty() const
   return m_proc == nullptr;
 }
 
-void running::get(uint64_t time,run_list& list,size_t& terminate)
+void running::get(uint64_t time,run_list& list)
 {
   if(m_proc == nullptr)
     return;
@@ -23,7 +30,15 @@ void running::get(uint64_t time,run_list& list,size_t& terminate)
   if(m_proc->remaining() != 0)
     list.push_back(*m_proc);
   else
-    ++terminate;
+  {
+    ++m_terminate;
+    auto now = std::chrono::high_resolution_clock::now();
+    if(now-m_real_time >= PRINT_INTERVAL)
+    {
+      m_real_time = now;
+      std::cout << '\r' << m_terminate << " of " << m_nprocess << " (" << static_cast<double>(m_terminate)/m_dnprocess*100.0 << "%) processes terminated" << std::flush;
+    }
+  }
   m_proc = nullptr;
 }
 

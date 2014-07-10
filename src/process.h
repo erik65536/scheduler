@@ -15,6 +15,7 @@ public:
   process(const process&) = delete;
   const process& operator=(const process&) = delete;
   process(process&& proc);
+  process& operator=(process&& proc);
   process(uint32_t pid,uint64_t burst,uint64_t arrival,uint8_t priority);
   uint64_t burst() const;
   uint64_t remaining() const;
@@ -38,13 +39,13 @@ public:
     return false;
   }
 private:
-  const uint64_t m_burst;
+  uint64_t m_burst;
   uint64_t m_remaining;
-  const uint64_t m_arrival;
+  uint64_t m_arrival;
   uint64_t m_terminate;
   uint64_t m_boost;
-  const uint32_t m_pid;
-  const uint8_t m_base_priority;
+  uint32_t m_pid;
+  uint8_t m_base_priority;
   uint8_t m_priority;
 };
 

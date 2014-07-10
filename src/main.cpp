@@ -30,18 +30,19 @@ int main(int narg,char** arg)
     std::vector<scheduler::process> processes;
     processes.reserve(nprocess);
     scheduler::process_from_file(input_file,&processes);
+    std::sort(processes.begin(),processes.end(),&scheduler::process::less_than_arrival_pid);
     //run scheduler
     {
       if(output)
       {
         scheduler::output_event out(FILE_EVENT);
         scheduler::scheduler s(&out,quantum,processes);
-        s.run(processes.size());
+        s.run();
       }
       else
       {
         scheduler::scheduler s(nullptr,quantum,processes);
-        s.run(processes.size());
+        s.run();
       }
     }
     //output

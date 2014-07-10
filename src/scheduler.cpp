@@ -4,18 +4,13 @@
 namespace scheduler
 {
 
-const std::chrono::milliseconds scheduler::PRINT_INTERVAL(1000);
-
 scheduler::scheduler(output_event* out,uint64_t quantum,std::vector<process>& procs)
 :m_arrival(procs),
-m_running(out,quantum)
+m_running(out,quantum,procs.size())
 {}
 
-void scheduler::run(size_t nprocess)
+void scheduler::run()
 {
-  auto start = std::chrono::high_resolution_clock::now();
-  size_t terminate = 0;
-  double dnprocess = static_cast<double>(nprocess);
   uint64_t time = 0;
 
   run_list add_list;
@@ -23,17 +18,11 @@ void scheduler::run(size_t nprocess)
   boost_list boost;
   while(!m_arrival.empty() || !m_run.empty() || !m_running.empty())
   {
-    if(std::chrono::high_resolution_clock::now()-start >= PRINT_INTERVAL)
-    {
-      start = std::chrono::high_resolution_clock::now();
-      std::cout << '\r' << terminate << " of " << nprocess << " (" << static_cast<double>(terminate)/dnprocess*100.0 << "%) processes terminated" << std::flush;
-    }
-
     m_boost.get(time,boost);
     m_run.erase_and_boost(boost,add_list);
     boost.clear();
 
-    m_running.get(time,add_list2,terminate);
+    m_running.get(time,add_list2);
     add_list.merge(add_list2);
 
     m_arrival.get(time,add_list2);

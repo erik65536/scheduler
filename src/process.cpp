@@ -16,6 +16,21 @@ m_base_priority{proc.m_base_priority},
 m_priority{proc.m_priority}
 {}
 
+process& process::operator=(process&& proc)
+{
+  hook_run::operator=(std::move(proc));
+  hook_boost::operator=(std::move(proc));
+  m_burst = proc.m_burst;
+  m_remaining = proc.m_remaining;
+  m_arrival = proc.m_arrival;
+  m_terminate = proc.m_terminate;
+  m_boost = proc.m_boost;
+  m_pid = proc.m_pid;
+  m_base_priority = proc.m_base_priority;
+  m_priority = proc.m_priority;
+  return *this;
+}
+
 process::process(uint32_t pid,uint64_t burst,uint64_t arrival,uint8_t priority)
 :m_burst{burst},
 m_remaining{burst},

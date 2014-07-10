@@ -6,7 +6,7 @@ namespace scheduler
 arrival_queue::arrival_queue(std::vector<process>& procs)
 :m_queue(procs.begin(),procs.end())
 {
-  m_queue.sort(&process::less_than_arrival_pid);
+  //m_queue.sort(&process::less_than_arrival_pid);
 }
 
 bool arrival_queue::empty() const

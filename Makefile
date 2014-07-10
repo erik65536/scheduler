@@ -1,9 +1,9 @@
 CC=g++
-CFLAGS=-c -Wall -std=c++11 -O3
-LDFLAGS=-O3
+#CFLAGS=-c -Wall -std=c++11 -O3
+#LDFLAGS=-O3
 #google-perftools
-#CFLAGS=-c -Wall -std=c++11 -O3 -lprofiler
-#LDFLAGS=-O3 -lprofiler
+CFLAGS=-c -Wall -std=c++11 -g -O3
+LDFLAGS=-O3 -g -lprofiler
 #debug
 #CFLAGS=-c -Wall -std=c++11 -g -fno-inline
 #LDFLAGS=-g -fno-inline
