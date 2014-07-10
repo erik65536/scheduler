@@ -6,11 +6,11 @@
 namespace scheduler
 {
 
-file_parser::file_parser(const char* file_name)
-:m_file(file_name)
+file_parser::file_parser(const std::string& file_name)
+:m_file(file_name.c_str())
 {
   if(!m_file)
-    throw std::logic_error("Unable to open file.");
+    throw std::logic_error("Unable to open input file "+file_name+".");
 }
 
 bool file_parser::line(uint64_t& pid,uint64_t& burst,uint64_t& arrival,uint64_t& priority)

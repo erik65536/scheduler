@@ -1,6 +1,13 @@
 scheduler
 =========
 
+**TODO**
+* output stats to console
+* correctness checking
+* bug hunting
+* optimize
+* improve readability
+
 **file_parser:** Memory maps the file for fast access limited only by virtual memory.
 * **file_parser(const char* file_name)** Memory map file. May throw exceptions.
 * **bool line(uint64_t& pid,uint64_t& burst,uint64_t& arrival,uint64_t& priority)** Read next valid line or return false if end of file.
